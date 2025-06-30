@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<interface domain="org.gtk.example">
+  <requires lib="gtk" version="4.0" />
+  <object class="GtkWindow" id="main_window">
+    <property name="title">Main window</property>
+    <property name="default-width">1280</property>
+    <property name="default-height">720</property>
+
+    <child>
+      <object class="GtkOverlay" id="overlay">
+
+        <child>
+          <object class="GtkGLArea" id="gl_area">
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox" id="dropdown_box">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">6</property>
+            <property name="halign">start</property>
+            <property name="valign">start</property>
+            <property name="margin-start">10</property>
+            <property name="margin-top">10</property>
+
+            <child>
+              <object class="GtkLabel" id="label_scenes">
+                <property name="label">Сцены:</property>
+                <property name="valign">center</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkDropDown" id="scenas_dropdown"/>
+            </child>
+
+          </object>
+        </child>
+
+      </object>
+    </child>
+  </object>
+</interface>
