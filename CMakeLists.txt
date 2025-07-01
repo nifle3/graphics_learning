@@ -41,7 +41,7 @@ file(GLOB STYLE_FILES "${PROJECT_SOURCE_DIR}/styles/*.css")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/styles"
-    COMMAND ${CMAKE_COMMAND} -R copy_if_different
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${STYLE_FILES}
         "$<TARGET_FILE_DIR:${PROJECT_NAME}>/styles"
 )
