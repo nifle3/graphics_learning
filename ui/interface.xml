@@ -33,7 +33,17 @@
             </child>
 
             <child>
-              <object class="GtkDropDown" id="scenas_dropdown"/>
+              <object class="GtkDropDown" id="scenas_dropdown">
+                <property name="model">
+                    <object class="GtkStringList">
+                        <items>
+                            <item>Factory</item>
+                            <item>Home</item>
+                            <item>Home</item>
+                        </items>
+                    </object>
+                </property>
+              </object>
             </child>
 
           </object>

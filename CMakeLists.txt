@@ -5,6 +5,7 @@ find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(GTK4 REQUIRED IMPORTED_TARGET gtk4>=4.0)
 pkg_check_modules(EPOXY REQUIRED IMPORTED_TARGET epoxy)
+pkg_check_modules(JSONC REQUIRED IMPORTED_TARGET json-c)
 
 find_package(Vulkan REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -22,26 +23,18 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     OpenGL::GL
     PkgConfig::GTK4
     PkgConfig::EPOXY
+    PkgConfig::JSONC
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin
 )
 
-file(GLOB UI_FILES "${PROJECT_SOURCE_DIR}/ui/*.xml")
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/ui"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${UI_FILES}
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/ui"
+add_custom_target(copy_resources ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/bin/ui
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/bin/styles
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/ui ${PROJECT_SOURCE_DIR}/bin/ui
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/styles ${PROJECT_SOURCE_DIR}/bin/styles
 )
 
-file(GLOB STYLE_FILES "${PROJECT_SOURCE_DIR}/styles/*.css")
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${PROJECT_NAME}>/styles"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${STYLE_FILES}
-        "$<TARGET_FILE_DIR:${PROJECT_NAME}>/styles"
-)
+add_dependencies(${PROJECT_NAME} copy_resources)

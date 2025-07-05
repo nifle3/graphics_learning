@@ -28,6 +28,9 @@
             glib
             libsysprof-capture
 
+            # json
+	    json_c
+
             # OpenGL
             libepoxy
             mesa
