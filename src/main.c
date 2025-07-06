@@ -6,11 +6,6 @@
 #include <gtk/gtkdropdown.h>
 #include <locale.h>
 
-typedef struct {
-    GtkWindow *window;
-    shaders_metadata_list_t *list;
-} app_context_t;
-
 static void activate(GtkApplication *app, gpointer user_data);
 static void gtk_dropdown_selected(GtkDropDown*, GParamSpec* , gpointer);
 static void set_css();
@@ -61,7 +56,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
         }
 
         gtk_drop_down_set_model(GTK_DROP_DOWN(scenas_dropdown), G_LIST_MODEL(model));
-        g_signal_connect(scenas_dropdown, "notify::selected-item", G_CALLBACK(gtk_dropdown_selected), window);
+        g_signal_connect(scenas_dropdown, "notify::selected-item", G_CALLBACK(gtk_dropdown_selected), list);
         g_object_notify(G_OBJECT(scenas_dropdown), "selected-item");
 
         set_css();
@@ -86,13 +81,10 @@ static void activate(GtkApplication *app, gpointer user_data) {
 }
 
 static void gtk_dropdown_selected(GtkDropDown* self, GParamSpec* pspec, gpointer user_data) {
-    GObject *selected = gtk_drop_down_get_selected_item(self);
-    if (GTK_IS_STRING_OBJECT(selected)) {
-        const gchar *selected_text = gtk_string_object_get_string(GTK_STRING_OBJECT(selected));
-        g_print("%s\n", selected_text);
-    } else {
-        g_print("Selected item is not a GtkStringObject\n");
-    }
+    shaders_metadata_list_t *list = (shaders_metadata_list_t *)user_data;
+    guint idx = gtk_drop_down_get_selected(self);
+    shaders_metadata_list_set_selected_idx(list, idx);
+    g_print("selected: %s\n", list->item[list->selected_idx].shader_name);
 }
 
 static void set_css() {

@@ -1,9 +1,13 @@
+#include "assert.h"
+
 #include "shaders_metadata.h"
 
 #include "json-c/json.h"
 #include "gtk/gtk.h"
 
 extern shaders_metadata_list_t* shaders_metadata_list_load_from_json(const char *file_name) {
+    assert(file_name != NULL);
+
     shaders_metadata_list_t *list = NULL;
     struct json_object *root = json_object_from_file(file_name);
 
@@ -16,6 +20,8 @@ extern shaders_metadata_list_t* shaders_metadata_list_load_from_json(const char 
 }
 
 extern shaders_metadata_list_t* shaders_metadata_list_parse_from_json(struct json_object *root) {
+    assert(root != NULL);
+
     size_t length = json_object_array_length(root);
     shaders_metadata_list_t *list = shaders_metadata_list_new(length);
 
@@ -70,16 +76,23 @@ extern shaders_metadata_list_t* shaders_metadata_list_parse_from_json(struct jso
 }
 
 extern void shaders_metadata_list_free(shaders_metadata_list_t *this) {
-    if (this)
-        return;
+    assert(this != NULL);
 
     free(this->item);
-    free(this);
 }
 
 extern shaders_metadata_list_t* shaders_metadata_list_new(size_t size) {
+    assert(size > 0);
+
     shaders_metadata_list_t* this = (shaders_metadata_list_t*)malloc(sizeof(shaders_metadata_list_t));
     this->size = size;
     this->item = (shaders_metadata_t*)malloc(sizeof(shaders_metadata_t) * size);
+    this->selected_idx = 0;
     return this;
+}
+
+extern void shaders_metadata_list_set_selected_idx(shaders_metadata_list_t* this, size_t idx) {
+    assert(this->size >= idx);
+
+    this->selected_idx = idx;
 }

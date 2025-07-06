@@ -17,6 +17,7 @@ typedef struct {
 typedef struct {
     size_t size;
     shaders_metadata_t *item;
+    size_t selected_idx;
 } shaders_metadata_list_t;
 
 extern shaders_metadata_list_t* shaders_metadata_list_load_from_json(const char*);
@@ -24,5 +25,6 @@ extern shaders_metadata_list_t* shaders_metadata_list_parse_from_json(struct jso
 
 extern void shaders_metadata_list_free(shaders_metadata_list_t*);
 extern shaders_metadata_list_t* shaders_metadata_list_new(size_t size);
+extern void shaders_metadata_list_set_selected_idx(shaders_metadata_list_t*, size_t);
 
 #endif
