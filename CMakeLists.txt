@@ -35,6 +35,7 @@ add_custom_target(copy_resources ALL
     COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/bin/styles
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/ui ${PROJECT_SOURCE_DIR}/bin/ui
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/styles ${PROJECT_SOURCE_DIR}/bin/styles
+    COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/shaders.json ${PROJECT_SOURCE_DIR}/bin/shaders.json
 )
 
 add_dependencies(${PROJECT_NAME} copy_resources)

@@ -1,6 +1,26 @@
 [
   {
-    "shader_file": "square",
-    "display_name": "Квадрат"
+    "shader_name": "square",
+    "display_name": "Square",
+    "shader_files": {
+      "vertex": "",
+      "fragment": ""
+    }
+  },
+  {
+    "shader_name": "circle",
+    "display_name": "Circle",
+    "shader_files": {
+      "vertex": "",
+      "fragment": ""
+    }
+  },
+  {
+    "shader_name": "box",
+    "display_name": "Box",
+    "shader_files": {
+      "vertex": "",
+      "fragment": ""
+    }
   }
 ]
